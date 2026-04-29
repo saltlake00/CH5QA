@@ -85,6 +85,12 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
+# QA 폴더
+.claude/*
+.idea/*
+
+
+
 ### UnrealEngine Patch ###
 # Don't ignore icon and splash images for mobile app
 !Build/IOS/Resources/
@@ -104,3 +110,5 @@ Plugins/**/Intermediate/*
 # End of https://www.toptal.com/developers/gitignore/api/unrealengine
 
 설명
+.aider*
+.idea/.idea.AO.dir/.idea/workspace.xml
