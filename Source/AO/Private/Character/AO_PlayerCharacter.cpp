@@ -499,7 +499,7 @@ void AAO_PlayerCharacter::StartJump()
 	}
 
 	AbilitySystemComponent->TryActivateAbilitiesByTag(
-		FGameplayTagContainer(FGameplayTag::RequestGameplayTag(FName("Ability.Movement.Junp"))));
+		FGameplayTagContainer(FGameplayTag::RequestGameplayTag(FName("Ability.Movement.Jump"))));
 }
 
 void AAO_PlayerCharacter::TriggerJump()
