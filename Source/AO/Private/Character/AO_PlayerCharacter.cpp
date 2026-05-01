@@ -323,6 +323,7 @@ void AAO_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EIC->BindAction(IA_Jump, ETriggerEvent::Started, this, &AAO_PlayerCharacter::StartJump);
 		EIC->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAO_PlayerCharacter::TriggerJump);
 		EIC->BindAction(IA_Walk, ETriggerEvent::Started, this, &AAO_PlayerCharacter::HandleWalk);
+		EIC->BindAction(IA_Crouch, ETriggerEvent::Started, this, &AAO_PlayerCharacter::HandleCrouch);
 
 		if (IsValid(AbilitySystemComponent))
 		{
