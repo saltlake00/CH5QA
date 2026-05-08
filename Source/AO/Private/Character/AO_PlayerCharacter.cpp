@@ -323,10 +323,13 @@ void AAO_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EIC->BindAction(IA_Jump, ETriggerEvent::Started, this, &AAO_PlayerCharacter::StartJump);
 		EIC->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAO_PlayerCharacter::TriggerJump);
 		EIC->BindAction(IA_Walk, ETriggerEvent::Started, this, &AAO_PlayerCharacter::HandleWalk);
+		EIC->BindAction(IA_Crouch, ETriggerEvent::Started, this, &AAO_PlayerCharacter::HandleCrouch);
 
 		if (IsValid(AbilitySystemComponent))
 		{
-			EIC->BindAction(IA_Sprint, ETriggerEvent::Triggered, this, &AAO_PlayerCharacter::HandleGameplayAbilityInputPressed, 1);
+			AO_LOG(LogJM,Warning,TEXT("ASC111111111"));
+			EIC->BindAction(IA_Sprint, ETriggerEvent::Started, this, &AAO_PlayerCharacter::HandleGameplayAbilityInputPressed, 1);
+			AO_LOG(LogJM,Warning,TEXT("ASC2222222222"));
 			EIC->BindAction(IA_Sprint, ETriggerEvent::Completed, this, &AAO_PlayerCharacter::HandleGameplayAbilityInputReleased, 1);
 			EIC->BindAction(IA_Outline_Train, ETriggerEvent::Started, this, &AAO_PlayerCharacter::HandleGameplayAbilityInputPressed, 2);
 		}			
@@ -499,7 +502,7 @@ void AAO_PlayerCharacter::StartJump()
 	}
 
 	AbilitySystemComponent->TryActivateAbilitiesByTag(
-		FGameplayTagContainer(FGameplayTag::RequestGameplayTag(FName("Ability.Movement.Junp"))));
+		FGameplayTagContainer(FGameplayTag::RequestGameplayTag(FName("Ability.Movement.Jump"))));
 }
 
 void AAO_PlayerCharacter::TriggerJump()
@@ -510,15 +513,19 @@ void AAO_PlayerCharacter::TriggerJump()
 
 void AAO_PlayerCharacter::HandleGameplayAbilityInputPressed(int32 InInputID)
 {
+	AO_LOG(LogJM,Warning,TEXT("ASC33333333333"));
 	if (FGameplayAbilitySpec* Spec = AbilitySystemComponent->FindAbilitySpecFromInputID(InInputID))
 	{
+		AO_LOG(LogJM,Warning,TEXT("ASC4444444444"));
 		Spec->InputPressed = true;
 		if (Spec->IsActive())
 		{
+			AO_LOG(LogJM,Warning,TEXT("ASC5555555555"));
 			AbilitySystemComponent->AbilitySpecInputPressed(*Spec);
 		}
 		else
 		{
+			AO_LOG(LogJM,Warning,TEXT("ASC66666666666"));
 			AbilitySystemComponent->TryActivateAbility(Spec->Handle);
 		}
 	}

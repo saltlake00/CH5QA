@@ -27,6 +27,7 @@ bool UAO_GameplayAbility_Sprint::CanActivateAbility(const FGameplayAbilitySpecHa
 	const UAO_PlayerCharacter_AttributeSet* AttributeSet = ActorInfo->AbilitySystemComponent->GetSet<UAO_PlayerCharacter_AttributeSet>();
 	if (!AttributeSet)
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive11111111111"));
 		return false;
 	}
 	
@@ -34,6 +35,7 @@ bool UAO_GameplayAbility_Sprint::CanActivateAbility(const FGameplayAbilitySpecHa
 	const float MaxStamina = AttributeSet->GetMaxStamina();
 	if (CurrentStamina < StaminaCost)
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive222222222"));
 		if (OptionalRelevantTags)
 		{
 			OptionalRelevantTags->AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Fail.NotEnoughStamina")));
@@ -43,38 +45,49 @@ bool UAO_GameplayAbility_Sprint::CanActivateAbility(const FGameplayAbilitySpecHa
 
 	if (!Super::CanActivateAbility(Handle, ActorInfo, SourceTags, TargetTags, OptionalRelevantTags))
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive3333333333333"));
+		FGameplayTagContainer OwnedTags;
+		ActorInfo->AbilitySystemComponent->GetOwnedGameplayTags(OwnedTags);
+		AO_LOG(LogJM, Warning, TEXT("CanActive3333 - 현재 보유 태그: %s"), *OwnedTags.ToStringSimple());
+		
 		return false;
 	}
 
 	if (!ActorInfo || !ActorInfo->AbilitySystemComponent.IsValid() || !ActorInfo->AvatarActor.IsValid())
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive44444444444"));
 		return false;
 	}
 
 	const AAO_PlayerCharacter* Character = Cast<AAO_PlayerCharacter>(ActorInfo->AvatarActor.Get());
 	if (!Character)
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive55555555555555"));
 		return false;
 	}
 
 	const UCharacterMovementComponent* CharacterMovement = Character->GetCharacterMovement();
 	if (!CharacterMovement)
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive666666666666"));
 		return false;
 	}
 
 	if (CharacterMovement->Velocity.SizeSquared2D() < KINDA_SMALL_NUMBER)
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive7777"));
 		return false;
 	}
 
 	if (CharacterMovement->IsCrouching())
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive88888"));
 		return false;
 	}
 
 	if (CurrentStamina < MaxStamina * AttributeSet->StaminaLockoutPercent)
 	{
+		AO_LOG(LogJM, Warning, TEXT("CanActive999999"));
 		return false;
 	}
 
@@ -104,23 +117,27 @@ void UAO_GameplayAbility_Sprint::InputPressed(const FGameplayAbilitySpecHandle H
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo)
 {
 	Super::InputPressed(Handle, ActorInfo, ActivationInfo);
-
+	AO_LOG(LogJM,Warning,TEXT("ASC7777777777777"));
 	const AAO_PlayerCharacter* Character = Cast<AAO_PlayerCharacter>(ActorInfo->AvatarActor.Get());
 	if (!Character)
 	{
+		AO_LOG(LogJM,Warning,TEXT("ASC88888888888"));
 		return;
 	}
 
 	const UCharacterMovementComponent* CharacterMovement = Character->GetCharacterMovement();
 	if (!CharacterMovement)
 	{
+		AO_LOG(LogJM,Warning,TEXT("9999999999999"));
 		return;
 	}
 	
 	if (CharacterMovement->Velocity.SizeSquared2D() < KINDA_SMALL_NUMBER)
 	{
+		AO_LOG(LogJM,Warning,TEXT("101010101010"));
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 	}
+	
 }
 
 void UAO_GameplayAbility_Sprint::InputReleased(const FGameplayAbilitySpecHandle Handle,

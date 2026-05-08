@@ -122,7 +122,7 @@ void UAO_PlayerCharacter_AttributeSet::HandleStaminaLockout(const struct FGamepl
 	const float Threshold = GetMaxStamina() * StaminaLockoutPercent;
 	const FGameplayTag LockoutTag = FGameplayTag::RequestGameplayTag(FName("Status.Lockout.Stamina"));
 	
-	if (NewStamina >= 0.f)
+	if (NewStamina <= Threshold)
 	{
 		if (!ASC->HasMatchingGameplayTag(LockoutTag))
 		{
@@ -133,7 +133,7 @@ void UAO_PlayerCharacter_AttributeSet::HandleStaminaLockout(const struct FGamepl
 			ASC->CancelAbilities(&SprintTag);
 		}
 	}
-	else if (ASC->HasMatchingGameplayTag(LockoutTag) && NewStamina <= Threshold)
+	else if (ASC->HasMatchingGameplayTag(LockoutTag) && NewStamina >= 0.f)
 	{
 		ASC->RemoveLooseGameplayTag(LockoutTag);
 	}

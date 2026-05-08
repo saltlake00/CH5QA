@@ -26,7 +26,7 @@ void UAO_MainMenuWidget::OnClicked_Host()
 	if (UAO_HostDialogWidget* Dialog = CreateWidget<UAO_HostDialogWidget>(GetWorld(), HostDialogClass))
 	{
 		Dialog->AddToViewport(200);
-		Dialog->SetVisibility(ESlateVisibility::Hidden);
+		Dialog->SetVisibility(ESlateVisibility::Visible);
 		Dialog->SetIsFocusable(true);
 		AO_LOG(LogJSH, Log, TEXT("OnClicked_Host: HostDialog popup displayed"));
 	}

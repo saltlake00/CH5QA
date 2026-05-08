@@ -52,7 +52,13 @@ void AAO_TrainDoor::Tick(float DeltaTime)
 
 bool AAO_TrainDoor::CanInteraction(const FAO_InteractionQuery& InteractionQuery) const
 {
-    return false;
+    //return false;
+    if(!Super::CanInteraction(InteractionQuery))
+    {
+        return false;
+    }
+    
+    return true;
 }
 
 void AAO_TrainDoor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
